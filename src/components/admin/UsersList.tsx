@@ -3,6 +3,7 @@
 import React from "react";
 import { User } from "@prisma/client";
 import { useState } from "react";
+import Link from "next/link";
 
 interface UsersListProps {
   users: (User & {
@@ -70,7 +71,14 @@ export default function UsersList({ users }: UsersListProps) {
         <tbody className="bg-white divide-y divide-gray-200">
           {users.map((user) => (
             <tr key={user.id}>
-              <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <Link 
+                  href={`/admin/users/${user.id}`}
+                  className="text-blue-600 hover:text-blue-800"
+                >
+                  {user.name}
+                </Link>
+              </td>
               <td className="px-6 py-4 whitespace-nowrap">{user.login}</td>
               <td className="px-6 py-4 whitespace-nowrap">
                 {user.balance.toFixed(2)} PLN
