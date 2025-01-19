@@ -1,0 +1,80 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  password      String
+  balance       Float     @default(0)
+  isAdmin       Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  gameSignups   GameSignup[]
+  transactions  Transaction[]
+}
+
+model Game {
+  id            String    @id @default(cuid())
+  date          DateTime
+  location      String
+  maxPlayers    Int      @default(18)
+  pricePerPerson Float   @default(35)
+  status        GameStatus @default(OPEN)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  signups       GameSignup[]
+}
+
+model GameSignup {
+  id        String    @id @default(cuid())
+  gameId    String
+  userId    String
+  status    SignupStatus @default(PENDING)
+  createdAt DateTime  @default(now())
+  game      Game      @relation(fields: [gameId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+
+  @@unique([gameId, userId])
+}
+
+model Transaction {
+  id        String    @id @default(cuid())
+  userId    String
+  amount    Float
+  type      TransactionType
+  status    TransactionStatus @default(PENDING)
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id])
+}
+
+enum GameStatus {
+  OPEN
+  FULL
+  CANCELLED
+  COMPLETED
+}
+
+enum SignupStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  GAME_PAYMENT
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+} 
