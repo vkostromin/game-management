@@ -41,7 +41,7 @@ export default async function AdminGamePage({ params }: Props) {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">Game Details</h1>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="space-y-6">
         <GameDetails game={game} />
         <ParticipantsList gameId={game.id} signups={game.signups} />
       </div>

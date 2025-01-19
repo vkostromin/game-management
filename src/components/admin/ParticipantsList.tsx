@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { GameSignup, User } from "@prisma/client";
 
 interface ParticipantsListProps {
@@ -14,6 +14,40 @@ export default function ParticipantsList({
   gameId,
   signups,
 }: ParticipantsListProps) {
+  const [amount, setAmount] = useState<string>("");
+
+  const handleBulkPayment = async () => {
+    const paymentAmount = parseFloat(amount);
+    if (isNaN(paymentAmount) || paymentAmount <= 0) {
+      alert("Please enter a valid amount");
+      return;
+    }
+
+    if (!confirm(`Are you sure you want to charge ${paymentAmount} PLN from each participant?`)) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/admin/games/${gameId}/signups/bulk-pay`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ amount: paymentAmount }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error);
+      }
+
+      setAmount("");
+      window.location.reload();
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Failed to process payment");
+    }
+  };
+
   const handleRemoveParticipant = async (signupId: string) => {
     if (!confirm("Are you sure you want to remove this participant?")) return;
 
@@ -32,7 +66,24 @@ export default function ParticipantsList({
 
   return (
     <div className="bg-white shadow rounded-lg p-6">
-      <h2 className="text-lg font-semibold mb-4">Participants</h2>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-lg font-semibold">Participants</h2>
+        <div className="flex items-center space-x-2">
+          <input
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            className="w-24 rounded-md border-gray-300 shadow-sm"
+            placeholder="Amount"
+          />
+          <button
+            onClick={handleBulkPayment}
+            className="px-3 py-1 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm"
+          >
+            Pay All
+          </button>
+        </div>
+      </div>
       <div className="space-y-4">
         {signups.map((signup) => (
           <div
@@ -42,6 +93,7 @@ export default function ParticipantsList({
             <div>
               <p className="font-medium">{signup.user.name}</p>
               <p className="text-sm text-gray-500">{signup.user.login}</p>
+              <p className="text-sm text-gray-500">Balance: {signup.user.balance.toFixed(2)} PLN</p>
             </div>
             <div className="flex items-center space-x-4">
               <span

@@ -53,10 +53,10 @@ export default async function AdminDashboard() {
         gameCount={stats[1]}
         totalRevenue={stats[2]._sum.amount || 0}
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1">
         <RecentGames games={recentGames} />
-        <PendingPayments payments={pendingPayments} />
       </div>
+        <PendingPayments payments={pendingPayments} />
     </div>
   );
 } 
