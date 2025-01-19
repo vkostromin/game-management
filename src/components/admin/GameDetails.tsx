@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 interface GameDetailsProps {
   game: Game & {
     signups: (GameSignup & {
-      user: Pick<User, "id" | "name" | "email" | "balance">;
+      user: Pick<User, "id" | "name" | "login" | "balance">;
     })[];
     _count: {
       signups: number;

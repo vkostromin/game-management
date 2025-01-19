@@ -6,7 +6,7 @@ import { GameSignup, User } from "@prisma/client";
 interface ParticipantsListProps {
   gameId: string;
   signups: (GameSignup & {
-    user: Pick<User, "id" | "name" | "email" | "balance">;
+    user: Pick<User, "id" | "name" | "login" | "balance">;
   })[];
 }
 
@@ -41,7 +41,7 @@ export default function ParticipantsList({
           >
             <div>
               <p className="font-medium">{signup.user.name}</p>
-              <p className="text-sm text-gray-500">{signup.user.email}</p>
+              <p className="text-sm text-gray-500">{signup.user.login}</p>
             </div>
             <div className="flex items-center space-x-4">
               <span

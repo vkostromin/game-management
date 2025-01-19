@@ -21,7 +21,7 @@ export default function UsersList({ users }: UsersListProps) {
               Name
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Email
+              login
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Balance
@@ -38,7 +38,7 @@ export default function UsersList({ users }: UsersListProps) {
           {users.map((user) => (
             <tr key={user.id}>
               <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{user.login}</td>
               <td className="px-6 py-4 whitespace-nowrap">
                 {user.balance.toFixed(2)} PLN
               </td>

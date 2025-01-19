@@ -12,7 +12,7 @@ export default async function AdminGames() {
             select: {
               id: true,
               name: true,
-              email: true,
+              login: true,
             },
           },
         },

@@ -20,7 +20,7 @@ export default async function AdminGamePage({ params }: Props) {
             select: {
               id: true,
               name: true,
-              email: true,
+              login: true,
               balance: true,
             },
           },

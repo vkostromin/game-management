@@ -7,7 +7,7 @@ import Link from "next/link";
 interface GamesListProps {
   games: (Game & {
     signups: (GameSignup & {
-      user: Pick<User, "id" | "name" | "email">;
+      user: Pick<User, "id" | "name" | "login">;
     })[];
     _count: {
       signups: number;

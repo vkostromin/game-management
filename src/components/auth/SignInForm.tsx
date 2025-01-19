@@ -8,7 +8,7 @@ export default function SignInForm() {
   const router = useRouter();
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
-    email: "",
+    login: "",
     password: "",
   });
 
@@ -17,7 +17,7 @@ export default function SignInForm() {
     try {
       const result = await signIn("credentials", {
         redirect: false,
-        email: formData.email,
+        login: formData.login,
         password: formData.password,
       });
 
@@ -40,11 +40,11 @@ export default function SignInForm() {
       )}
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Email</label>
+          <label className="block text-sm font-medium text-gray-700">login</label>
           <input
-            type="email"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            type="login"
+            value={formData.login}
+            onChange={(e) => setFormData({ ...formData, login: e.target.value })}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
             required
           />
