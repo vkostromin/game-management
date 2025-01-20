@@ -8,12 +8,6 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
   
   const games = await prisma.game.findMany({
-    where: {
-      status: "OPEN",
-      date: {
-        gte: new Date(),
-      },
-    },
     include: {
       signups: true,
       _count: {
@@ -23,7 +17,7 @@ export default async function Home() {
       }
     },
     orderBy: {
-      date: 'asc',
+      date: "desc",
     },
   });
 
