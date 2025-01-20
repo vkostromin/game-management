@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { GameSignup, User } from "@prisma/client";
+import Link from "next/link";
 
 interface ParticipantsListProps {
   gameId: string;
@@ -91,7 +92,12 @@ export default function ParticipantsList({
             className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
           >
             <div>
-              <p className="font-medium">{signup.user.name}</p>
+              <Link 
+                href={`/admin/users/${signup.user.id}`}
+                className="font-medium text-blue-600 hover:text-blue-800"
+              >
+                {signup.user.name}
+              </Link>
               <p className="text-sm text-gray-500">{signup.user.login}</p>
               <p className="text-sm text-gray-500">Balance: {signup.user.balance.toFixed(2)} PLN</p>
             </div>
@@ -107,12 +113,14 @@ export default function ParticipantsList({
               >
                 {signup.status}
               </span>
-              <button
-                onClick={() => handleRemoveParticipant(signup.id)}
-                className="text-red-600 hover:text-red-800"
-              >
-                Remove
-              </button>
+              {signup.status === "PENDING" && (
+                <button
+                  onClick={() => handleRemoveParticipant(signup.id)}
+                  className="text-red-600 hover:text-red-800"
+                >
+                  Remove
+                </button>
+              )}
             </div>
           </div>
         ))}

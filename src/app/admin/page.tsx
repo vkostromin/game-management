@@ -11,10 +11,6 @@ export default async function AdminDashboard() {
       _sum: {
         amount: true,
       },
-      where: {
-        type: "GAME_PAYMENT",
-        status: "COMPLETED",
-      },
     }),
   ]);
 
@@ -56,7 +52,7 @@ export default async function AdminDashboard() {
       <div className="grid grid-cols-1">
         <RecentGames games={recentGames} />
       </div>
-        <PendingPayments payments={pendingPayments} />
+      {pendingPayments.length > 0 && <PendingPayments payments={pendingPayments} />}
     </div>
   );
 } 
