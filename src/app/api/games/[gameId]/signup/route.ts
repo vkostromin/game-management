@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
+import { GameStatus } from "@prisma/client";
 
 export async function POST(
   request: Request,
@@ -93,7 +94,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Game not found" }, { status: 404 });
     }
 
-    if (game.status !== "OPEN") {
+    if (game.status !== GameStatus.OPEN && game.status !== GameStatus.FULL) {
       return NextResponse.json(
         { error: "Cannot cancel signup for this game" },
         { status: 400 }
@@ -114,10 +115,10 @@ export async function DELETE(
     });
 
     // Update game status if it was full
-    if (game.status === "FULL") {
+    if (game.status === GameStatus.FULL) {
       await prisma.game.update({
         where: { id: params.gameId },
-        data: { status: "OPEN" },
+        data: { status: GameStatus.OPEN },
       });
     }
 

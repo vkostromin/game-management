@@ -1,11 +1,4 @@
-import {
-  User,
-  Game,
-  GameStatus,
-  SignupStatus,
-  TransactionType,
-  TransactionStatus,
-} from "@prisma/client";
+import { User, Game, SignupStatus } from "@prisma/client";
 
 export type SafeUser = Omit<User, "password"> & {
   password?: undefined;
