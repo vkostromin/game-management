@@ -24,7 +24,7 @@ export default async function Home() {
   return (
     <main>
       <WelcomeHeader user={session?.user} />
-      <GameList games={games} currentUser={session?.user} />
+      <GameList games={games} />
     </main>
   );
 } 
