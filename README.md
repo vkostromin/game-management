@@ -115,6 +115,12 @@ npx prisma migrate deploy
 - User balance management
 - Game participation history
 
+## Demo
+
+Check out our demo video to see the Game Management System in action:
+
+[![Game Management System Demo](https://img.youtube.com/vi/N882_MfjlzI/0.jpg)](https://youtu.be/N882_MfjlzI)
+
 ## Tech Stack
 
 - Next.js 14 (App Router)
